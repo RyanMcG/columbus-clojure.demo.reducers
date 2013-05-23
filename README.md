@@ -1,13 +1,15 @@
 # columbus-clojure.demo.reducers
 
-A Clojure library designed to ... well, that part is up to you.
+Try out the clojure reducers library for the local meetup.
 
 ## Usage
 
-FIXME
+```bash
+lein test
+```
 
 ## License
 
-Copyright © 2013 FIXME
+Copyright © 2013 Ryan McGowan
 
 Distributed under the Eclipse Public License, the same as Clojure.
