@@ -4,7 +4,7 @@
             [foldable-seq.core :refer [foldable-seq]]
             [criterium.core :refer :all]))
 
-(def big-number 1000000)
+(def big-number 10000)
 
 ; There might be a better way but this works
 (def big-lazy-range (lazy-seq (into [] (range big-number))))
