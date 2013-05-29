@@ -1,27 +1,71 @@
 (ns columbus-clojure.demo.reducers
   (:require [clojure.core.reducers :as r]
+            [clojure.pprint :as pp]
+            [foldable-seq.core :refer [foldable-seq]]
             [criterium.core :refer :all]))
 
-(def big-number 10000000)
+(def big-number 1000000)
 
 ; There might be a better way but this works
 (def big-lazy-range (lazy-seq (into [] (range big-number))))
 (def big-non-lazy-range (into [] (range big-number)))
 
-(defn sum-reducer [memo v]
-  ;(Thread/sleep 10)
-  (+ memo v))
+(defn core-sum-reducer
+  "C +"
+  [coll]
+  (reduce + coll))
 
-(defn core-sum-reducer [coll]
-  (reduce sum-reducer coll))
+(defn reducer-sum-reducer
+  "R +"
+  [coll]
+  (r/reduce + coll))
 
-(defn reducer-sum-reducer [coll]
-  (r/reduce sum-reducer 0 coll))
+(defn core-multi-reducer
+  "C *"
+  [coll]
+  (->> (range 100)
+       (reduce (fn [reducible multiplier]
+                 (map (partial * (mod multiplier 5)) reducible))
+               coll)
+       (reduce +)))
+
+(defn reducer-multi-reducer
+  "R *"
+  [coll]
+  (->> (range 100)
+       (reduce (fn [reducible multiplier]
+                 (r/map (partial * (mod multiplier 5)) reducible))
+               coll)
+       (r/fold +)))
+
+(defn fs-reducer-multi-reducer
+  "FS *"
+  [coll]
+  (->> (range 100)
+       foldable-seq
+       (reduce (fn [reducible multiplier]
+                 (r/map (partial * (mod multiplier 5)) reducible))
+               coll)
+       (r/fold +)))
+
+(defmacro mean-bench
+  "A mean benching macro"
+  [expr]
+  `(-> ~expr
+       (quick-benchmark {})
+       :mean
+       first))
 
 (defn -main
   "Just a main function"
   []
-  (doseq [reduce-version [reducer-sum-reducer core-sum-reducer]
-          coll [big-lazy-range big-non-lazy-range]]
-    (with-progress-reporting
-      (quick-bench (core-sum-reducer coll)))))
+  (pp/print-table
+    [:reducer :lazy :non-lazy]
+    (for [reducer-version [#'reducer-sum-reducer
+                           #'core-sum-reducer
+                           #'fs-reducer-multi-reducer
+                           #'reducer-multi-reducer
+                           #'core-multi-reducer]]
+      {:reducer (:doc (meta reducer-version))
+       :lazy (mean-bench (reducer-version big-lazy-range))
+       :non-lazy (mean-bench (reducer-version big-non-lazy-range))})))
