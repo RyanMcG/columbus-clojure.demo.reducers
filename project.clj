@@ -5,5 +5,6 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [foldable-seq "0.2"]
+                 [incanter "1.4.1"]
                  [criterium "0.4.1"]]
   :main columbus-clojure.demo.reducers)
