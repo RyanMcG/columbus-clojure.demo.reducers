@@ -1,4 +1,4 @@
-(ns columbus-clojure.demo.reducers-test
+(ns columbus-clojure.demo.reducers.core-test
   (:require [clojure.test :refer :all]
             [columbus-clojure.demo.reducers :refer :all]))
 

@@ -1,8 +1,8 @@
-(ns columbus-clojure.demo.reducers
+(ns columbus-clojure.demo.reducers.core
   (:require [clojure.core.reducers :as r]
             [clojure.pprint :as pp]
             [foldable-seq.core :refer [foldable-seq]]
-            [criterium.core :refer :all]))
+            (columbus-clojure.demo.reducers [benchmark :refer [mean-bench]])))
 
 (def big-number 10000)
 
@@ -47,26 +47,6 @@
                  (r/map (partial * (mod multiplier 5)) reducible))
                coll)
        (r/fold +)))
-
-(defn benchmark-times*
-  [f {:as options}]
-  (let [{:keys [samples warmup-jit-period target-execution-time gc-before-sample
-                overhead] :as opts}
-        (merge *default-benchmark-opts* options)]
-    (run-benchmark
-      samples warmup-jit-period target-execution-time f opts overhead)))
-
-(defmacro quick-benchmark-times
-  [expr options]
-  `(benchmark-times* (fn [] ~expr) (merge *default-quick-bench-opts* ~options)))
-
-(defmacro mean-bench
-  "A mean benching macro"
-  [expr]
-  `(-> ~expr
-       (quick-benchmark {})
-       :mean
-       first))
 
 (defn -main
   "Just a main function"

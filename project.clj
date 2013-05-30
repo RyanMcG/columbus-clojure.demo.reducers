@@ -7,4 +7,4 @@
                  [foldable-seq "0.2"]
                  [incanter "1.4.1"]
                  [criterium "0.4.1"]]
-  :main columbus-clojure.demo.reducers)
+  :main columbus-clojure.demo.reducers.core)
