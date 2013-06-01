@@ -57,17 +57,23 @@
        (reduce-multiplier r/map coll)
        (r/fold +)))
 
-(defn historgram-output
+(def ^:dynamic *reducer-versions*
+  [#'reducer-sum-reducer
+   #'core-sum-reducer
+   #'fs-reducer-multi-reducer
+   #'reducer-multi-reducer
+   #'core-multi-reducer])
+
+(defmacro with-versions
+  [versions & body]
+  `(binding [*reducer-versions* ~versions]
+     ~@body))
+
+(defn histogram-output
   "Create a histogram for the given symbols (should be tied to functions). If no
   symbols are given then use all of them"
-  [& reducer-version-symbols]
-  (doseq [reducer-version (if (empty? reducer-version-symbols)
-                            [#'reducer-sum-reducer
-                             #'core-sum-reducer
-                             #'fs-reducer-multi-reducer
-                             #'reducer-multi-reducer
-                             #'core-multi-reducer]
-                            reducer-version-symbols)
+  []
+  (doseq [reducer-version *reducer-versions*
           coll [#'big-lazy-range #'big-non-lazy-range]]
     (let [reducer-doc (:doc (meta reducer-version))
           coll-doc (:doc (meta coll))]
@@ -79,19 +85,12 @@
                         :x-label "Execution Time (ms)")
           (in/view)))))
 
-
 (defn table-output
   "Output results as a table"
-  [& reducer-version-symbols]
+  []
   (pp/print-table
     [:reducer :lazy :non-lazy]
-    (for [reducer-version (if (empty? reducer-version-symbols)
-                            [#'reducer-sum-reducer
-                             #'core-sum-reducer
-                             #'fs-reducer-multi-reducer
-                             #'reducer-multi-reducer
-                             #'core-multi-reducer]
-                            reducer-version-symbols)]
+    (for [reducer-version *reducer-versions*]
       {:reducer (:doc (meta reducer-version))
        :lazy (bench/mean-bench (reducer-version big-lazy-range))
        :non-lazy (bench/mean-bench (reducer-version big-non-lazy-range))})))
