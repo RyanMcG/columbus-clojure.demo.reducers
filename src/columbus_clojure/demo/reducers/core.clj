@@ -31,7 +31,7 @@
 
 (defmacro reduce-multiplier [map-version coll rng]
   `(reduce (fn [reducible# multiplier#]
-             (~map-version (partial * (mod multiplier# 5)) reducible#))
+             (~map-version (partial * (inc (mod multiplier# 5))) reducible#))
            ~coll
            ~rng))
 
