@@ -12,19 +12,19 @@
 ### Histograms
 
 ![core - lazy range](results/core--lazy-range.png)
-![core - lazy range](results/core--non-lazy-range.png)
+![core - non-lazy range](results/core--non-lazy-range.png)
 
 ---
 
-![core - lazy range](results/core--lazy-range.png)
-![core - lazy range](results/core--non-lazy-range.png)
+![reduce-reducers - lazy range](results/reduce-reducers--lazy-range.png)
+![reduce-reducers - non-lazy range](results/reduce-reducers--non-lazy-range.png)
 
 ---
 
-![core - lazy range](results/core--lazy-range.png)
-![core - lazy range](results/core--non-lazy-range.png)
+![fold-reducers - lazy range](results/fold-reducers--lazy-range.png)
+![fold-reducers - non-lazy range](results/fold-reducers--non-lazy-range.png)
 
 ---
 
-![core - lazy range](results/core--lazy-range.png)
-![core - lazy range](results/core--non-lazy-range.png)
+![lazy-fold - lazy range](results/lazy-fold--lazy-range.png)
+![lazy-fold - non-lazy range](results/lazy-fold--non-lazy-range.png)
