@@ -6,6 +6,14 @@ Check out the [reducers' API documentation](http://clojure.github.io/clojure/clo
 
 ## Usage
 
+Generate table of results and histograms:
+
+```bash
+lein run
+```
+
+Or run tests:
+
 ```bash
 lein test
 ```
