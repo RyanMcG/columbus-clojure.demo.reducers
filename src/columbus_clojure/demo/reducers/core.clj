@@ -28,28 +28,28 @@
            ~rng))
 
 (defn core-multi-reducer
-  "(*) Reduce + Core"
+  "Reduce + Core"
   [coll]
   (->> (range multiplier-count)
        (reduce-multiplier map coll)
        (reduce +)))
 
 (defn reducer-fold-multi-reducer
-  "(*) Fold + Reducers"
+  "Fold + Reducers"
   [coll]
   (->> (range multiplier-count)
        (reduce-multiplier r/map coll)
        (r/fold +)))
 
 (defn reducer-reduce-multi-reducer
-  "(*) Reduce + Reducers"
+  "Reduce + Reducers"
   [coll]
   (->> (range multiplier-count)
        (reduce-multiplier r/map coll)
        (r/reduce +)))
 
 (defn fs-reducer-multi-reducer
-  "(*) Lazy Fold + Reducers"
+  "Lazy Fold + Reducers"
   [coll]
   (let [foldable-coll (foldable-seq coll)]
     (->> (range multiplier-count)
