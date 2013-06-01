@@ -8,7 +8,7 @@
               [benchmark :as bench])))
 
 (def big-number 10000)
-(def multiplier-count 100)
+(def multiplier-count 30)
 
 ; There might be a better way but this works
 (def big-lazy-range
