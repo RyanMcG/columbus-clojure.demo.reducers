@@ -2,6 +2,7 @@
   (:require [criterium.core :refer :all]))
 
 (defn benchmark-times*
+  "Effectively a copy of the criterium version"
   [f {:as options}]
   (let [{:keys [samples warmup-jit-period target-execution-time gc-before-sample
                 overhead] :as opts}
@@ -22,7 +23,8 @@
   "A mean benching macro"
   [expr]
   `(let [result# (quick-benchmark ~expr {})]
-     (println (report-result result#))
+     (report-result result#)
+     (println)
      (-> result#
          :mean
          first)))
