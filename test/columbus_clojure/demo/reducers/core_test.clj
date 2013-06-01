@@ -11,9 +11,6 @@
 (deftest multi-reducer-versions-equivalent
   (let [output (core-multi-reducer small-lazy-range)]
     (is (> output 0))
-    (are [multi-reducer coll] (= output (multi-reducer coll))
-         fs-reducer-multi-reducer small-non-lazy-range
-         fs-reducer-multi-reducer small-lazy-range
-         reducer-multi-reducer small-non-lazy-range
-         reducer-multi-reducer small-lazy-range
-         core-multi-reducer small-lazy-range)))
+    (doseq [reducer-version *reducer-versions*
+            coll [small-lazy-range small-non-lazy-range]]
+      (is (= output (reducer-version coll))))))
