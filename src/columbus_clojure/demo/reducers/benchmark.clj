@@ -22,12 +22,10 @@
 (defmacro mean-bench
   "A mean benching macro"
   [expr]
-  `(let [result# (quick-benchmark ~expr {})]
-     (report-result result#)
-     (println)
-     (-> result#
-         :mean
-         first)))
+  `(-> ~expr
+       (quick-benchmark {})
+       :mean
+       first))
 
 (defn data->times
   [{:keys [samples execution-count]}]
