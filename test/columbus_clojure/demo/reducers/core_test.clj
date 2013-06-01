@@ -26,6 +26,7 @@
 
 (deftest multi-reducer-versions-equivalent
   (let [output (core-multi-reducer small-lazy-range)]
+    (is (> output 0))
     (are [multi-reducer coll] (= output (multi-reducer coll))
          fs-reducer-multi-reducer small-non-lazy-range
          fs-reducer-multi-reducer small-lazy-range
