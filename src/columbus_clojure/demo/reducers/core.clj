@@ -80,7 +80,7 @@
       (-> (reducer-version (var-get coll))
           (bench/benchmark-times)
           (bench/data->times)
-          (ic/histogram :nbins 5
+          (ic/histogram :nbins 10
                         :title (str reducer-doc " with a " coll-doc)
                         :x-label "Execution Time (ms)")
           (in/view)))))
