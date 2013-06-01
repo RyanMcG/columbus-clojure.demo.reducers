@@ -54,10 +54,10 @@
 (defn fs-reducer-multi-reducer
   "(*) Lazy Fold & Reducers"
   [coll]
-  (->> (range multiplier-count)
-       foldable-seq
-       (reduce-multiplier r/map coll)
-       (r/fold +)))
+  (let [foldable-coll (foldable-seq coll)]
+    (->> (range multiplier-count)
+         (reduce-multiplier r/map foldable-coll)
+         (r/fold +))))
 
 (def ^:dynamic *reducer-versions*
   [#'reducer-sum-reducer
