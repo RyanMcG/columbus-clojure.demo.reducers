@@ -1,6 +1,6 @@
 (ns columbus-clojure.demo.reducers.core-test
   (:require [clojure.test :refer :all]
-            [columbus-clojure.demo.reducers :refer :all]))
+            [columbus-clojure.demo.reducers.core :refer :all]))
 
 (def small-number 1000)
 
@@ -16,7 +16,7 @@
       (* nu)
       (/ 2)))
 
-(deftest sum-reducer-versions-work
+(deftest sum-reducer-versions-equivalent
   (let [output (gaussian-sum small-number)]
     (are [sum-reducer coll] (= output (sum-reducer coll))
          reducer-sum-reducer small-non-lazy-range
@@ -24,10 +24,11 @@
          core-sum-reducer small-non-lazy-range
          core-sum-reducer small-lazy-range)))
 
-(deftest multi-reducer-versions-work
-  (let [output (gaussian-sum small-number)]
-    (are [sum-reducer coll] (= output (sum-reducer coll))
-         reducer-sum-reducer small-non-lazy-range
-         reducer-sum-reducer small-lazy-range
-         core-sum-reducer small-non-lazy-range
-         core-sum-reducer small-lazy-range)))
+(deftest multi-reducer-versions-equivalent
+  (let [output (core-multi-reducer small-lazy-range)]
+    (are [multi-reducer coll] (= output (multi-reducer coll))
+         fs-reducer-multi-reducer small-non-lazy-range
+         fs-reducer-multi-reducer small-lazy-range
+         reducer-multi-reducer small-non-lazy-range
+         reducer-multi-reducer small-lazy-range
+         core-multi-reducer small-lazy-range)))
