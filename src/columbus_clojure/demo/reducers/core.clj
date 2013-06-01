@@ -19,16 +19,6 @@
   "Non-Lazy Range"
   (into [] (range big-number)))
 
-(defn core-sum-reducer
-  "(+) Core"
-  [coll]
-  (reduce + coll))
-
-(defn reducer-sum-reducer
-  "(+) Reducers"
-  [coll]
-  (r/reduce + coll))
-
 (defmacro reduce-multiplier [map-version coll rng]
   `(reduce (fn [reducible# multiplier#]
              (~map-version #(* (inc (mod multiplier# 5))
@@ -60,9 +50,7 @@
          (r/fold +))))
 
 (def ^:dynamic *reducer-versions*
-  [#'reducer-sum-reducer
-   #'core-sum-reducer
-   #'fs-reducer-multi-reducer
+  [#'fs-reducer-multi-reducer
    #'reducer-multi-reducer
    #'core-multi-reducer])
 
