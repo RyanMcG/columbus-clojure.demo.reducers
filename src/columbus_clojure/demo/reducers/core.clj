@@ -94,3 +94,10 @@
       {:reducer (:doc (meta reducer-version))
        :lazy (bench/mean-bench (reducer-version big-lazy-range))
        :non-lazy (bench/mean-bench (reducer-version big-non-lazy-range))})))
+
+(defn -main
+  "Run both the histogram and table-output for the given symbols. If none are
+  given do it for all symbols."
+  []
+  (table-output)
+  (histogram-output))
